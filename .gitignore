@@ -17,6 +17,9 @@ VAL/
 yes/
 no/
 
+# Uploaded files
+static/uploads/
+
 # Environment variables
 .env
 
