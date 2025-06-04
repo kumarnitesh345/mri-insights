@@ -1,0 +1,41 @@
+Based on the code analysis, this project uses the following model and techniques:
+Base Model: VGG16 (Visual Geometry Group 16)
+A pre-trained convolutional neural network (CNN) architecture
+Uses weights from ImageNet for transfer learning
+Input size: 224x224x3 (RGB images)
+Custom Architecture:
+Added custom layers on top of VGG16:
+Global Average Pooling
+Dense layers with ReLU activation (2048, 1024, 512 neurons)
+Batch Normalization after each dense layer
+Dropout layers (0.5, 0.5, 0.3) for regularization
+Final dense layer with softmax activation for binary classification
+Training Techniques:
+Transfer Learning: Uses pre-trained VGG16 weights
+Data Augmentation:
+Rotation (20 degrees)
+Width/Height shifts (0.2)
+Horizontal flips
+Nearest neighbor fill mode
+Learning Rate: 0.0001 with Adam optimizer
+Loss Function: Categorical Cross-Entropy
+Training Optimizations:
+Early Stopping: Stops training if validation loss doesn't improve for 10 epochs
+Learning Rate Reduction: Reduces learning rate when validation loss plateaus
+Model Checkpointing: Saves best model based on validation accuracy
+Batch Size: 32
+Maximum Epochs: 50
+Data Processing:
+Image resizing to 224x224 pixels
+VGG16 preprocessing (mean subtraction and scaling)
+Data split into train/validation/test sets
+Categorical encoding of labels
+Evaluation Metrics:
+Accuracy
+Confusion Matrix
+Classification Report
+Training/Validation accuracy and loss plots
+The model is designed for binary classification of brain MRI scans into two classes:
+Tumor Present
+No Tumor
+The architecture combines the powerful feature extraction capabilities of VGG16 with custom layers optimized for the specific task of brain tumor detection. The use of transfer learning, data augmentation, and various regularization techniques helps prevent overfitting and improves the model's generalization ability.

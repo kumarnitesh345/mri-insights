@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brain Tumor Detection - MRI-Insights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      #upload-area {
+        transition: background-color 0.3s ease;
+      }
+      #upload-area:hover {
+        background-color: #f0f0f0;
+      }
+
+      /* Autocomplete container to position the dropdown */
+      .autocomplete-container {
+          position: relative;
+          display: inline-block; /* or block, depending on desired layout */
+          width: 100%; /* Make the container take full width */
+      }
+
+      /* Styles for the autocomplete suggestions dropdown */
+      .autocomplete-items {
+          position: absolute;
+          border: 1px solid #d4d4d4;
+          border-bottom: none;
+          border-top: none;
+          z-index: 99;
+          top: 100%; /* Position right below the input */
+          left: 0;
+          right: auto; /* Allow width to control the right boundary */
+          width: 50%; /* Set width to half of the container */
+          max-height: 150px; /* Limit height and add scrollbar */
+          overflow-y: auto;
+          background-color: #fff;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          border-radius: 0 0 0.375rem 0.375rem; /* Rounded corners only at the bottom */
+      }
+
+      .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #d4d4d4;
+      }
+      .autocomplete-items div:hover {
+        background-color: #e9e9e9;
+      }
+
+      /* Add styles for the new layout */
+      #analysis-results-container {
+          align-items: stretch; /* Stretch items to match height */
+      }
+      #analysis-results-container .flex-shrink-0 {
+          max-width: 40%; /* Limit max-width for larger screens */
+          aspect-ratio: 1; /* Ensure square aspect ratio */
+          width: 100%; /* Allow full width on small screens */
+      }
+      #analysis-results-container img {
+          width: 100%;
+          height: 100%; /* Make image take full height of its container */
+          object-fit: contain; /* Ensure entire image is visible */
+      }
+
+       @media (min-width: 768px) {
+          #analysis-results-container .flex-shrink-0 {
+              width: 40%; /* Set explicit width on medium screens and up */
+              max-width: none; /* Remove max-width constraint */
+          }
+          #analysis-results-container .result-card {
+              align-self: stretch; /* Ensure result card stretches in height */
+          }
+       }
+
+       /* Styles from landing.html */
+      .gradient-text {
+        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hover-card {
+        transition: all 0.3s ease;
+      }
+
+      .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      .text-gradient {
+        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 font-[Inter]">
+    <!-- Navigation from landing.html -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-20">
+      <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center">
+            <a href="/">
+              <span class="text-2xl font-bold text-blue-600">MRI-Insights</span>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Container - Simplified for Centering -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col gap-8">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-3xl font-bold text-center text-gray-900 mb-2">
+              Brain Tumor Detection
+            </h1>
+            <p class="text-center text-gray-600 mb-8">
+              MRI-Insights is a machine learning-based web tool designed to assist in
+              detecting brain tumors from MRI scans. Simply upload an MRI image, and
+              our intelligent system will analyze it in real-time to provide a clear
+              YES or NO result — along with a confidence score — indicating whether
+              a tumor is likely present.
+            </p>
+
+            <!-- Upload Area -->
+            <div
+              id="dropZone"
+              class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition-colors duration-200"
+            >
+              <input type="file" id="fileInput" accept="image/*" class="hidden" />
+              <div class="mb-4">
+                <svg
+                  class="mx-auto h-12 w-12 text-blue-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+              </div>
+              <h5 class="text-lg font-medium text-gray-900">
+                Drag and drop an image here
+              </h5>
+              <p class="text-gray-500 mt-1">or</p>
+              <button
+                class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Choose File
+              </button>
+            </div>
+
+            <!-- Analysis Results Container -->
+            <div id="analysis-results-container" class="hidden mt-2 flex flex-col md:flex-row items-center md:items-stretch gap-6">
+
+              <!-- Image Preview -->
+              <div class="flex-shrink-0 w-full md:w-2/5 aspect-square flex items-center justify-center overflow-hidden rounded-lg border border-gray-300">
+                 <img id="preview" class="w-full h-full object-contain" alt="Uploaded MRI Scan"/>
+              </div>
+
+              <!-- Loading Indicator -->
+              <div class="loading hidden flex-1 text-center md:text-left">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+                <p class="mt-2 text-gray-600">Analyzing image...</p>
+              </div>
+
+              <!-- Results Card -->
+              <div class="result-card hidden flex-1 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 p-6 flex flex-col justify-center">
+                <h5 class="text-lg font-medium text-gray-900 mb-2">
+                  Analysis Result
+                </h5>
+                <p id="resultText" class="text-2xl font-semibold mb-2"></p>
+                <p id="confidenceText" class="text-lg text-gray-600"></p>
+                <!-- Note about confidence score -->
+                <p class="mt-4 text-sm text-gray-700 p-2 bg-gray-100 border border-gray-200 rounded">
+                  <span class="font-semibold">Confidence Score:</span> Indicates the model's certainty in its prediction. A higher percentage means higher confidence.
+                </p>
+              </div>
+            </div>
+
+            <!-- Insert as new div (for location input and "Suggest Hospitals" button) after the result card (and before the closing div of the container) -->
+            <div id="hospital-suggestions-container" class="hidden mt-2 bg-white rounded-lg shadow-lg p-6">
+              <h5 class="text-lg font-medium text-gray-900 mb-2">Suggest Nearby Hospitals</h5>
+              <p class="text-gray-600 mb-2">Please enter your location (e.g. "Kolkata") below and click "Suggest Hospitals" to see a list of hospitals specializing in brain tumor remediation.</p>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <!-- Autocomplete container around the input for proper positioning -->
+                <div class="autocomplete-container">
+                  <input type="text" id="locationInput" placeholder="Enter your location (e.g. Kolkata)" class="flex-1 mt-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+                   <div id="locationInput-autocomplete-list" class="autocomplete-items"></div>
+                </div>
+                <button id="suggestHospitalsBtn" class="inline-flex items-center px-2 py-1 border border-transparent text-md font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Suggest Hospitals</button>
+              </div>
+              <div id="hospitalSuggestions" class="mt-4 text-gray-700"></div>
+            </div>
+
+            <!-- Confidence Score Guide - Moved Here -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mt-4">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Confidence Score Guide</h2>
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600">Score Range</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600">Interpretation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">0% - 50%</td>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Low confidence (likely No Tumor)</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">51% - 80%</td>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Moderate confidence</td>
+                        </tr>
+                         <tr>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">81% - 100%</td>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">High confidence (likely Tumor Detected)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <p class="mt-4 text-sm text-gray-600">Note: This is a general guide. Always consult a medical professional for diagnosis.
+                 </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-8" id="footer">
+      <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <!-- Company Info -->
+          <div class="space-y-6">
+            <a href="/">
+              <h3 class="text-2xl font-bold text-blue-300">MRI-Insights</h3>
+            </a>
+            <p class="text-gray-400 text-sm">
+              Advancing medical imaging through artificial intelligence.
+            </p>
+            <div class="flex space-x-6">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-300 transition-colors duration-300"
+                target="_blank"
+              >
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-300 transition-colors duration-300"
+                target="_blank"
+              >
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-300 transition-colors duration-300"
+                target="_blank"
+              >
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="space-y-6">
+            <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+            <li>
+                <a
+                  href="/"
+                  class="text-gray-300 hover:text-blue-300 transition-colors duration-300"
+                  target="_blank"
+                  >Home</a
+                >
+              </li>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="space-y-6">
+            <h3 class="text-lg font-semibold text-white mb-4">Contact Us</h3>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex items-start">
+                <svg
+                  class="h-5 w-5 mr-3 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+                mediscan.ai.mri@gmail.com
+              </li>
+              <li class="flex items-start">
+                <svg
+                  class="h-5 w-5 mr-3 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                +91 9334129956
+              </li>
+            </ul>
+          </div>
+
+          <!-- Stay Updated -> Contact Team -->
+          <div class="space-y-6">
+            <h3 class="text-lg font-semibold text-white mb-4">Contact Team</h3>
+            <ul class="space-y-3 text-gray-300 text-sm">
+              <li>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/lakshya-pandey-969aa220b/" class="hover:underline text-blue-300" target="_blank">Lakshya Pandey</a></p>
+                <p>Email: <a href="mailto:lakshyapandey787@gmail.com" class="hover:underline text-blue-300" target="_blank">lakshyapandey787@gmail.com</a></p>
+              </li>
+              <li>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/manjeet-kumar-8665761ab/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="hover:underline text-blue-300" target="_blank">manjeetjimishra00170@gmail.com</a></p>
+                <p>Email: <a href="mailto:manjeetjimishra00170@gmail.com" class="hover:underline text-blue-300" target="_blank">manjeetjimishra00170@gmail.com</a></p>
+               </li>
+               <li>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/naveen-kumar-barnwal-a278632ab" class="hover:underline text-blue-300" target="_blank">Naveen Kumar Barnwal</a></p>
+                <p>Email: <a href="mailto:nk270595@gmail.com" class="hover:underline text-blue-300" target="_blank">nk270595@gmail.com</a></p>
+               </li>
+               <li>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/nitesh-kumar-d/" class="hover:underline text-blue-300" target="_blank">Nitesh Kumar</a></p>
+                <p>Email: <a href="mailto:nk1711336@gmail.com" class="hover:underline text-blue-300" target="_blank">nk1711336@gmail.com</a></p>
+               </li>            <!-- Add more list items for additional team members -->
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Copyright -->
+        <div
+          class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400 text-sm"
+        >
+          <p>
+            &copy; 2025 MRI-Insights. All rights reserved. |
+            <a
+              href="#"
+              class="hover:text-blue-300 transition-colors duration-300"
+              >Group 20 @MRI-Insights</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Note: The smooth scrolling and active nav link highlighting scripts from landing.html are not included here
+      // as they are tied to sections that do not exist on this page.
+
+      // Function to validate file type and size
+      function validateFile(file) {
+          const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+          const maxSize = 5 * 1024 * 1024; // 5MB
+
+          if (!allowedTypes.includes(file.type)) {
+              throw new Error('Please upload a valid image file (JPEG, PNG, or JPG)');
+          }
+
+          if (file.size > maxSize) {
+              throw new Error('File size should be less than 5MB');
+          }
+
+          return true;
+      }
+
+      // Function to reset the UI state
+      function resetUI() {
+          const dropZone = document.getElementById('dropZone');
+          const analysisResultsContainer = document.getElementById('analysis-results-container');
+          const loadingIndicator = analysisResultsContainer?.querySelector('.loading');
+          const resultCard = analysisResultsContainer?.querySelector('.result-card');
+          const hospitalSuggestionsContainer = document.getElementById('hospital-suggestions-container');
+
+          if (dropZone) dropZone.classList.remove('hidden');
+          if (analysisResultsContainer) analysisResultsContainer.classList.add('hidden');
+          if (loadingIndicator) loadingIndicator.classList.add('hidden');
+          if (resultCard) resultCard.classList.add('hidden');
+          if (hospitalSuggestionsContainer) hospitalSuggestionsContainer.classList.add('hidden');
+      }
+
+      // Function to show error message
+      function showError(message) {
+          const resultText = document.getElementById('resultText');
+          const confidenceText = document.getElementById('confidenceText');
+          const resultCard = document.querySelector('.result-card');
+          const loadingIndicator = document.querySelector('.loading');
+
+          if (loadingIndicator) loadingIndicator.classList.add('hidden');
+          if (resultCard) resultCard.classList.remove('hidden');
+          if (resultText) {
+              resultText.textContent = 'Error: ' + message;
+              resultText.classList.remove('text-green-600', 'text-red-600');
+              resultText.classList.add('text-gray-800');
+          }
+          if (confidenceText) confidenceText.textContent = '';
+      }
+
+      // Function to handle file processing and prediction
+      async function processFile(file) {
+          console.log('processFile called with file:', file);
+          if (!file) return;
+
+          try {
+              // Validate file
+              validateFile(file);
+
+              // Get necessary elements
+              const dropZone = document.getElementById('dropZone');
+              const analysisResultsContainer = document.getElementById('analysis-results-container');
+              const loadingIndicator = analysisResultsContainer?.querySelector('.loading');
+              const resultCard = analysisResultsContainer?.querySelector('.result-card');
+              const previewImage = document.getElementById('preview');
+              const resultText = document.getElementById('resultText');
+              const confidenceText = document.getElementById('confidenceText');
+              const hospitalSuggestionsContainer = document.getElementById('hospital-suggestions-container');
+
+              // Reset UI state and show loading state
+              resetUI(); // Hide previous results and show the drop zone again
+
+              if (analysisResultsContainer) analysisResultsContainer.classList.remove('hidden');
+              if (loadingIndicator) loadingIndicator.classList.remove('hidden');
+              if (resultCard) resultCard.classList.add('hidden');
+              if (hospitalSuggestionsContainer) hospitalSuggestionsContainer.classList.add('hidden');
+
+              // Display image preview
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                  if (previewImage) previewImage.src = e.target.result;
+              };
+              reader.onerror = () => {
+                  throw new Error('Failed to read the image file');
+              };
+              reader.readAsDataURL(file);
+
+              const formData = new FormData();
+              formData.append('file', file);
+
+              const response = await fetch('/predict', {
+                  method: 'POST',
+                  body: formData
+              });
+
+              if (!response.ok) {
+                  throw new Error(`Server responded with status: ${response.status}`);
+              }
+
+              const result = await response.json();
+
+              // Hide loading and show results
+              if (loadingIndicator) loadingIndicator.classList.add('hidden');
+              if (resultCard) resultCard.classList.remove('hidden');
+
+              if (result.error) {
+                  showError(result.error);
+              } else {
+                  if (resultText && resultCard) {
+                      resultText.textContent = result.prediction;
+                      // Set color and background based on prediction
+                      if (result.prediction === 'Tumor Detected') {
+                          resultText.classList.remove('text-green-600', 'text-gray-800');
+                          resultText.classList.add('text-red-600', 'text-4xl', 'font-extrabold');
+                          resultCard.classList.remove('bg-green-100'); // Remove previous background
+                          resultCard.classList.add('bg-red-100'); // Add red background
+                          if (hospitalSuggestionsContainer) hospitalSuggestionsContainer.classList.remove('hidden');
+                      } else {
+                          resultText.classList.remove('text-red-600', 'text-gray-800');
+                          resultText.classList.add('text-green-600', 'text-4xl', 'font-extrabold');
+                          resultCard.classList.remove('bg-red-100'); // Remove previous background
+                          resultCard.classList.add('bg-green-100'); // Add green background
+                          if (hospitalSuggestionsContainer) hospitalSuggestionsContainer.classList.add('hidden');
+                      }
+                  }
+                  if (confidenceText) {
+                      confidenceText.textContent = 'Confidence: ' + result.confidence;
+                      confidenceText.classList.add('text-xl', 'font-semibold');
+                  }
+              }
+
+          } catch (error) {
+              console.error('Error during prediction:', error);
+              showError(error.message || 'Could not process the image. Please try again.');
+          }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+          // File handling elements
+          const fileInput = document.getElementById('fileInput');
+          const dropZone = document.getElementById('dropZone');
+          const analysisResultsContainer = document.getElementById('analysis-results-container');
+          const loadingIndicator = analysisResultsContainer?.querySelector('.loading');
+          const resultCard = analysisResultsContainer?.querySelector('.result-card');
+          const previewImage = document.getElementById('preview');
+          const resultText = document.getElementById('resultText');
+          const confidenceText = document.getElementById('confidenceText');
+          const hospitalSuggestionsContainer = document.getElementById('hospital-suggestions-container');
+          const hospitalSuggestionsDiv = document.getElementById('hospitalSuggestions');
+          
+          // Hospital search elements
+          const locationInput = document.getElementById('locationInput');
+          const suggestHospitalsBtn = document.getElementById('suggestHospitalsBtn');
+          const autocompleteList = document.getElementById('locationInput-autocomplete-list');
+          let cities = [];
+
+          // File handling event listeners
+          if (dropZone) {
+              dropZone.addEventListener('click', () => {
+                  console.log('dropZone clicked');
+                  if (fileInput) {
+                      fileInput.value = ''; // Clear the input value
+                      fileInput.click();
+                  }
+              });
+          }
+
+          if (fileInput) {
+              fileInput.addEventListener('change', (event) => {
+                  console.log('fileInput change event fired', event.target.files);
+                  const file = event.target.files[0];
+                  if (file) {
+                      console.log('File selected:', file);
+                      processFile(file);
+                  }
+              });
+          }
+
+          if (dropZone) {
+              dropZone.addEventListener('dragover', (event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  dropZone.classList.add('border-blue-500', 'bg-blue-50');
+              });
+
+              dropZone.addEventListener('dragleave', (event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+              });
+
+              dropZone.addEventListener('drop', (event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+
+                  const file = event.dataTransfer.files[0];
+                  if (file) {
+                      console.log('File dropped:', file);
+                      processFile(file);
+                  }
+              });
+          }
+
+          // Hospital search functionality
+          async function fetchCities() {
+              try {
+                  const response = await fetch('/cities');
+                  if (!response.ok) throw new Error('Failed to fetch cities');
+                  cities = await response.json();
+                  console.log('Cities loaded:', cities);
+              } catch (error) {
+                  console.error('Error fetching cities:', error);
+              }
+          }
+
+          // Fetch cities when the page loads
+          fetchCities();
+
+          // Show dropdown when input is focused
+          locationInput.addEventListener('focus', function() {
+              if (cities.length === 0) {
+                  fetchCities();
+              }
+              if (this.value.length >= 2) {
+                  showSuggestions(this.value);
+              }
+          });
+
+          // Handle input changes
+          locationInput.addEventListener('input', function() {
+              showSuggestions(this.value);
+          });
+
+          function showSuggestions(value) {
+              const searchValue = value.toLowerCase().trim();
+              autocompleteList.innerHTML = '';
+              
+              if (searchValue.length < 2) {
+                  autocompleteList.style.display = 'none';
+                  return;
+              }
+
+              const matches = cities.filter(city => 
+                  city.toLowerCase().includes(searchValue)
+              );
+
+              if (matches.length > 0) {
+                  autocompleteList.style.display = 'block';
+                  matches.forEach(city => {
+                      const div = document.createElement('div');
+                      div.className = 'p-2 hover:bg-gray-100 cursor-pointer';
+                      div.textContent = city;
+                      div.addEventListener('click', function() {
+                          locationInput.value = city;
+                          autocompleteList.style.display = 'none';
+                      });
+                      autocompleteList.appendChild(div);
+                  });
+              } else {
+                  autocompleteList.style.display = 'none';
+              }
+          }
+
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function(e) {
+              if (!locationInput.contains(e.target) && !autocompleteList.contains(e.target)) {
+                  autocompleteList.style.display = 'none';
+              }
+          });
+
+          // Handle hospital suggestions
+          suggestHospitalsBtn.addEventListener('click', async function() {
+              const location = locationInput.value.trim();
+              if (!location) {
+                  alert('Please enter a location');
+                  return;
+              }
+
+              try {
+                  const response = await fetch('/suggest_hospitals', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ location: location })
+                  });
+
+                  if (!response.ok) throw new Error('Failed to fetch hospital suggestions');
+                  
+                  const data = await response.json();
+                  
+                  if (data.suggestions && data.suggestions.length > 0) {
+                      let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                      data.suggestions.forEach(hospital => {
+                          html += `
+                              <div class="bg-white p-4 rounded-lg shadow border border-gray-200 flex flex-col">
+                                  <h3 class="font-semibold text-lg text-gray-900 mb-2">${hospital.name}</h3>
+                                  <p class="text-sm text-gray-600 mb-1">Type: ${hospital.type}</p>
+                                  <p class="text-sm text-gray-600 mb-3">Address: ${hospital.address}</p>
+                                  ${hospital.image ? `
+                                      <div class="relative w-full h-48 mt-auto">
+                                          <img src="${hospital.image}" 
+                                              alt="${hospital.name}" 
+                                              class="absolute inset-0 w-full h-full object-contain bg-gray-50 rounded-lg"
+                                              onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Hospital+Image'">
+                                      </div>
+                                  ` : ''}
+                              </div>
+                          `;
+                      });
+                      html += '</div>';
+                      hospitalSuggestionsDiv.innerHTML = html;
+                  } else {
+                      hospitalSuggestionsDiv.innerHTML = '<p class="text-gray-600">No hospitals found in this location.</p>';
+                  }
+              } catch (error) {
+                  console.error('Error fetching hospital suggestions:', error);
+                  hospitalSuggestionsDiv.innerHTML = '<p class="text-red-600">Error fetching hospital suggestions. Please try again.</p>';
+              }
+          });
+      });
+    </script>
+  </body>
+</html>

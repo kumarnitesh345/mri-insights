@@ -1,0 +1,41 @@
+# Python virtual environment
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Model files (too large for GitHub)
+*.h5
+*.hdf5
+*.model
+*.weights
+
+# Large data directories
+TRAIN/
+TEST/
+VAL/
+yes/
+no/
+
+# Environment variables
+.env
+
+# IDE specific files
+.vscode/
+.idea/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints 

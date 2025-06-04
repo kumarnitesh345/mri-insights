@@ -1,0 +1,226 @@
+{
+  "Delhi": [
+    {
+      "name": "AIIMS Delhi",
+      "type": "Government",
+      "address": "Ansari Nagar, New Delhi - 110029",
+      "image": "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2017/01/aiimsdelhi-1485314231.jpg"
+    },
+    {
+      "name": "Fortis Escorts Heart Institute",
+      "type": "Private",
+      "address": "Okhla Road, New Delhi - 110025",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCB2SJUe5xahaOt6eiQwIpWhYXXrccmvac5Q&s"
+    }
+  ],
+  "Mumbai": [
+    {
+      "name": "KEM Hospital",
+      "type": "Government",
+      "address": "Acharya Donde Marg, Parel, Mumbai - 400012",
+      "image": "https://www.kem.edu/images/home-slide9.jpg"
+    },
+    {
+      "name": "Lilavati Hospital",
+      "type": "Private",
+      "address": "A-791, Bandra Reclamation, Mumbai - 400050",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs77dHOmsy0M4qJUemA4ajOv9iJB_jtDqvvg&s"
+    }
+  ],
+  "Bangalore": [
+    {
+      "name": "Bowring and Lady Curzon Hospital",
+      "type": "Government",
+      "address": "Shivaji Nagar, Bengaluru - 560001",
+      "image": "https://assets.collegedunia.com/public/college_data/images/appImage/1591599626bow11.jpg"
+    },
+    {
+      "name": "Manipal Hospital",
+      "type": "Private",
+      "address": "98, HAL Airport Rd, Bengaluru - 560017",
+      "image": "https://static.wixstatic.com/media/c3430c_2d5ebd3a715b4c1e8271c76fce1bf5ef~mv2.jpg/v1/fill/w_560,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/c3430c_2d5ebd3a715b4c1e8271c76fce1bf5ef~mv2.jpg"
+    }
+  ],
+  "Chennai": [
+    {
+      "name": "Rajiv Gandhi Government General Hospital",
+      "type": "Government",
+      "address": "EVR Periyar Salai, Chennai - 600003",
+      "image": "https://www.mmcrgggh.tn.gov.in/ords/r/wsmmc/120/files/static/v1884/FRAME04.png"
+    },
+    {
+      "name": "Apollo Hospital",
+      "type": "Private",
+      "address": "Greams Road, Chennai - 600006",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR3Hv53JzECdzjO8x3PVI4v16EkLR9LI_pRg&s"
+    }
+  ],
+  "Kolkata": [
+    {
+      "name": "S.S.K.M. Hospital",
+      "type": "Government",
+      "address": "AJC Bose Rd, Kolkata - 700020",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh32TdDGdUnh9KJzRXp6Km5Lh3gb-mRz7nQQ&s"
+    },
+    {
+      "name": "AMRI Hospital",
+      "type": "Private",
+      "address": "Salt Lake, Kolkata - 700064",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU2t9VEu5Yk4lY3RqohIXpy51G3zQi1mK6ug&s"
+    }
+  ],
+  "Hyderabad": [
+    {
+      "name": "Osmania General Hospital",
+      "type": "Government",
+      "address": "Afzal Gunj, Hyderabad - 500012",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJttGvf6aGjvYvWDuMfGKotABWeoYXDvXkYg&s"
+    },
+    {
+      "name": "Apollo Hospitals",
+      "type": "Private",
+      "address": "Jubilee Hills, Hyderabad - 500033",
+      "image": "https://www.apollohospitals.com/sites/default/files/2025-02/Apollo-Hospitals-Secuandrabad%2C%20Hyderabad_0.jpg"
+    }
+  ],
+  "Pune": [
+    {
+      "name": "Sassoon General Hospital",
+      "type": "Government",
+      "address": "Near Pune Railway Station, Pune - 411001",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR7wGmVTOgj0b935nHThGmLmzTN0hiir3E_g&s"
+    },
+    {
+      "name": "Jehangir Hospital",
+      "type": "Private",
+      "address": "32 Sassoon Road, Pune - 411001",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/34/Jehangir_Hospital_Building.jpg"
+    }
+  ],
+  "Ahmedabad": [
+    {
+      "name": "Civil Hospital Ahmedabad",
+      "type": "Government",
+      "address": "Asarwa, Ahmedabad - 380016",
+      "image": "https://media.ahmedabadmirror.com/am/uploads/mediaGallery/image/1616762792859.jpg-org"
+    },
+    {
+      "name": "Sterling Hospital",
+      "type": "Private",
+      "address": "Gurukul Road, Ahmedabad - 380052",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlil04VvUJj-dEFw55XFFFfKUJGw_zJk4jcQ&s"
+    }
+  ],
+  "Jaipur": [
+    {
+      "name": "SMS Hospital",
+      "type": "Government",
+      "address": "Jawahar Lal Nehru Marg, Jaipur - 302004",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrKLz4ZOmdOoUWaLl18HV2RGyf8v2VT7WzYg&s"
+    },
+    {
+      "name": "Fortis Escorts Hospital",
+      "type": "Private",
+      "address": "Jawahar Circle, Jaipur - 302017",
+      "image": "https://www.medicaltours.care/HealthTourism/img/background/Fortis_Jaipur_1.jpg"
+    }
+  ],
+  "Lucknow": [
+    {
+      "name": "KGMU",
+      "type": "Government",
+      "address": "Chowk, Lucknow - 226003",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb8GMyhWbQg7xlIaxy5wXoB7vYa5K4P8purQ&s"
+    },
+    {
+      "name": "Sahara Hospital",
+      "type": "Private",
+      "address": "Gomti Nagar, Lucknow - 226010",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9VI3ZAjagKpbJdhedYj3ZG96TlHKengp7Lw&s"
+    }
+  ],
+  "Jodhpur": [
+    {
+      "name": "AIIMS Jodhpur",
+      "type": "Government",
+      "address": "Basni Phase 2, Jodhpur - 342005",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2wH4CYGcjNft7NWOjywwB2XS3V5m5C0q8ug&s"
+    },
+    {
+      "name": "Medipulse Hospital",
+      "type": "Private",
+      "address": "E-4, MIA, Basni II Phase, Jodhpur - 342005",
+      "image": "https://www.kayawell.com/Data/Practice//53c6b018-f3ae-4335-a1df-ab793713fa0c.jpg"
+    }
+  ],
+  "Haldia": [
+    {
+      "name": "Haldia Subdivisional Hospital",
+      "type": "Government",
+      "address": "Debhog, Haldia - 721602",
+      "image": "https://assets.telegraphindia.com/abp/2023/Jan/1673744755_haldia-subdivision.jpg"
+    },
+    {
+      "name": "Dr. B. C. Roy Hospital",
+      "type": "Private",
+      "address": "Haldia Township, Haldia - 721607",
+      "image": "https://icaremedicalcollege.com/storage/app/departmnt_image/nY9qqn77d4iOnhLMLSa8IQz7BubFbd3KFBOgtpaT.jpg"
+    }
+  ],
+  "Kanpur": [
+    {
+      "name": "Lala Lajpat Rai Hospital (LLR)",
+      "type": "Government",
+      "address": "Swaroop Nagar, Kanpur - 208002",
+      "image": "https://gsvmmedicalcollege.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-18-at-3.34.09-PM.jpeg"
+    },
+    {
+      "name": "Regency Hospital",
+      "type": "Private",
+      "address": "Sarvodaya Nagar, Kanpur - 208005",
+      "image": "https://regencyhealthcare.in/wp-content/uploads/2023/01/tower-1.png"
+    }
+  ],
+  "Patna": [
+    {
+      "name": "Patna Medical College and Hospital (PMCH)",
+      "type": "Government",
+      "address": "Ashok Rajpath, Patna - 800004",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9lxDA8XA5uP-Z0Z0_hOD9VwZUr63ElhjBTw&s"
+    },
+    {
+      "name": "Paras HMRI Hospital",
+      "type": "Private",
+      "address": "Bailey Road, Patna - 800014",
+      "image": "https://parashospitals-web.s3.ap-south-1.amazonaws.com/hospitals/June2024/IIjrUDFImMxfgYBegsVy.jpg"
+    }
+  ],
+  "Buxar": [
+    {
+      "name": "Sadar Hospital Buxar",
+      "type": "Government",
+      "address": "Civil Lines, Buxar - 802101",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCNRlfIQ6Irt369e3aJB-LnWYvOvc2B4mbAQ&s"
+    },
+    {
+      "name": "Life Line Hospital",
+      "type": "Private",
+      "address": "Station Road, Buxar - 802101",
+      "image": "https://files.yappe.in/place/small/ashirwad-diagnostic-centre-ct-scan-5494662.webp"
+    }
+  ],
+  "Ranchi": [
+    {
+      "name": "Rajendra Institute of Medical Sciences (RIMS)",
+      "type": "Government",
+      "address": "Bariatu Road, Ranchi - 834009",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzmEaMs13SnZDfxhfLnPldAtajXcBQFICjIA&s"
+    },
+    {
+      "name": "Medanta Hospital Ranchi",
+      "type": "Private",
+      "address": "Panchwati Nagar, Ranchi - 834009",
+      "image": "https://medanta.s3.ap-south-1.amazonaws.com/hospitals/February2025/YelIyqoA5uGHAsU26kWk9EH54Aumyv-metaUGF0bmEgSG9zcGl0YWwgSW1hZ2UgKDIpLmpwZw==-.jpg"
+    }
+  ]
+}
