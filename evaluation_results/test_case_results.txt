@@ -1,0 +1,44 @@
+Evaluation Results for Test Case image/
+
+Accuracy: 0.5455
+Precision: 0.3571
+Recall: 0.8333
+F1-Score: 0.5000
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    No Tumor       0.88      0.44      0.58        16
+       Tumor       0.36      0.83      0.50         6
+
+    accuracy                           0.55        22
+   macro avg       0.62      0.64      0.54        22
+weighted avg       0.73      0.55      0.56        22
+
+Confusion Matrix:
+[[7 9]
+ [1 5]]
+
+Per-image predictions (filename, true label, predicted label):
+yes/Y69.jpg, 1, 1
+yes/Y90.jpg, 1, 0
+yes/Y91.jpg, 1, 1
+yes/Y92.jpg, 1, 1
+yes/Y92.png, 1, 1
+yes/Y95.jpg, 1, 1
+no/WhatsApp Image 2025-06-03 at 01.09.20_2ae948a4.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.21_65d3f404.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.22_673d8776.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.23_54ee2bd4.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.24_08d1a473.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.25_ed869ee4.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.26_1be4a965.jpg, 0, 0
+no/WhatsApp Image 2025-06-03 at 01.09.26_6a781119.jpg, 0, 0
+no/WhatsApp Image 2025-06-03 at 01.09.26_d7765459.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.28_5b73faa2.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.28_ba83492d.jpg, 0, 1
+no/WhatsApp Image 2025-06-03 at 01.09.29_305c7a32.jpg, 0, 0
+no/WhatsApp Image 2025-06-03 at 01.09.29_f28315cb.jpg, 0, 0
+no/WhatsApp Image 2025-06-03 at 01.09.30_7ae92975.jpg, 0, 0
+no/WhatsApp Image 2025-06-03 at 01.09.30_db8fb559.jpg, 0, 0
+no/WhatsApp Image 2025-06-03 at 01.09.31_5321fd8e.jpg, 0, 0

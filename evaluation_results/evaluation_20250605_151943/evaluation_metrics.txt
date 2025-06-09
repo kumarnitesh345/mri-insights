@@ -1,0 +1,17 @@
+Model Evaluation Metrics
+======================
+
+Accuracy: 0.8824
+Precision: 0.8571
+Recall: 0.8571
+F1-Score: 0.8571
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    No Tumor       0.90      0.90      0.90        10
+       Tumor       0.86      0.86      0.86         7
+
+    accuracy                           0.88        17
+   macro avg       0.88      0.88      0.88        17
+weighted avg       0.88      0.88      0.88        17

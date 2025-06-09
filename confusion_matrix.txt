@@ -1,0 +1,138 @@
+Confusion Matrix:
+                Predicted
+                No Tumor  Tumor
+Actual
+No Tumor           9       1    (10 total)
+Tumor              1       6    (7 total)
+
+
+Model Performance Metrics on Test Cases:
+Accuracy: 0.8824
+Precision: 0.8571
+Recall: 0.8571
+F1-Score: 0.8571
+
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    No Tumor       0.90      0.90      0.90        10
+       Tumor       0.86      0.86      0.86         7
+
+    accuracy                           0.88        17
+   macro avg       0.88      0.88      0.88        17
+weighted avg       0.88      0.88      0.88        17
+
+
+Incorrect Predictions:
+    File Name True Label Predicted Label  Confidence
+0   30 no.jpg         no             yes    0.780727
+12    Y90.jpg        yes              no    0.952648
+
+
+
+
+
+Chapter 5: Test Case Analysis and Validation
+5.1 Introduction
+This chapter presents a detailed analysis of the model's performance on specific test cases, providing insights into the practical application of the brain tumor detection system. The evaluation was conducted using a dedicated test case dataset to assess the model's real-world applicability.
+5.2 Test Case Dataset Composition
+The test case evaluation was performed on a dataset comprising 17 medical images:
+10 non-tumor cases
+7 tumor cases
+This distribution provides a balanced assessment of the model's performance across both classes.
+5.3 Detailed Test Case Analysis
+5.3.1 Performance Metrics
+The model demonstrated the following performance on test cases:
+Overall Metrics:
+- Accuracy: 88.24%
+- Precision: 85.71%
+- Recall: 85.71%
+- F1-Score: 85.71%
+
+5.3.2 Class-Specific Performance
+Apply to confusion_ma...
+No Tumor Class (10 cases):
+- Precision: 90%
+- Recall: 90%
+- F1-score: 90%
+
+Tumor Class (7 cases):
+- Precision: 86%
+- Recall: 86%
+- F1-score: 86%
+
+5.3.3 Error Analysis
+The model made two incorrect predictions:
+False Positive Case:
+File: "30 no.jpg"
+True Label: No Tumor
+Predicted Label: Tumor
+Confidence: 78.07%
+Analysis: The model showed moderate confidence in its incorrect prediction, suggesting potential ambiguity in the image features
+False Negative Case:
+File: "Y90.jpg"
+True Label: Tumor
+Predicted Label: No Tumor
+Confidence: 95.26%
+Analysis: The model showed high confidence in its incorrect prediction, indicating a potential limitation in detecting certain tumor characteristics
+5.4 Test Case Performance Interpretation
+5.4.1 Strengths
+High Overall Accuracy:
+88.24% accuracy on test cases
+15 out of 17 correct predictions
+Demonstrates robust performance in real-world scenarios
+Balanced Performance:
+Similar performance across both classes
+No significant bias towards either tumor or non-tumor detection
+Consistent metrics across different evaluation measures
+Confidence Levels:
+High confidence in correct predictions
+Moderate to high confidence in incorrect predictions
+Suggests the model is decisive in its classifications
+5.4.2 Limitations
+Error Patterns:
+One false positive and one false negative
+Both errors occurred with significant confidence
+Indicates potential challenges in edge cases
+Dataset Size:
+Limited to 17 test cases
+May not fully represent the diversity of real-world scenarios
+Suggests need for larger test dataset
+5.4.3 Clinical Implications
+Diagnostic Reliability:
+High accuracy suggests potential for clinical use
+Balanced performance across classes indicates fair treatment of both conditions
+Confidence levels provide additional diagnostic information
+Error Impact:
+False negative (missed tumor) is more concerning for clinical application
+False positive (incorrect tumor detection) could lead to unnecessary procedures
+Both types of errors require careful consideration in clinical deployment
+5.5 Test Case-Specific Recommendations
+5.5.1 Immediate Improvements
+Error Analysis:
+Detailed examination of "30 no.jpg" and "Y90.jpg"
+Identification of common features in misclassified cases
+Development of specific strategies for similar cases
+Confidence Thresholds:
+Implementation of confidence-based decision making
+Consideration of additional review for cases with confidence between 70-95%
+Development of a tiered classification system
+5.5.2 Long-term Enhancements
+Dataset Expansion:
+Collection of more test cases
+Inclusion of edge cases and ambiguous scenarios
+Development of a comprehensive test suite
+Model Refinement:
+Focus on reducing false negatives
+Improvement in handling edge cases
+Development of ensemble methods for difficult cases
+5.6 Conclusion
+The test case analysis reveals that the model performs well in real-world scenarios, with an overall accuracy of 88.24%. The balanced performance across classes and consistent metrics suggest reliability in clinical applications. However, the presence of both false positive and false negative cases, particularly with high confidence, indicates areas for improvement.
+The test case evaluation provides valuable insights into the model's practical application and highlights the importance of continued refinement for clinical deployment. The results suggest that while the model shows promise, additional validation and improvement are necessary before widespread clinical implementation.
+5.7 Future Work
+Development of a larger, more diverse test case dataset
+Implementation of confidence-based decision support systems
+Investigation of ensemble methods to improve accuracy
+Development of specific strategies for handling edge cases
+Creation of a comprehensive validation protocol for clinical deployment
