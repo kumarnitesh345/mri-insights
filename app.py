@@ -54,34 +54,43 @@ def detect():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file uploaded'})
-    
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'})
-    
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file uploaded'})
         
-        # Preprocess the image
-        img = preprocess_image(filepath)
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'})
         
-        # Make prediction
-        prediction = model.predict(img)
-        confidence = float(prediction[0][1])  # Probability of tumor
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            
+            # Preprocess the image
+            img = preprocess_image(filepath)
+            
+            # Make prediction
+            prediction = model.predict(img)
+            # Handle different output shapes
+            if prediction.shape[-1] == 1:
+                confidence = float(prediction[0][0])  # For sigmoid output
+            else:
+                confidence = float(prediction[0][1])  # For softmax output (2 classes)
+            
+            result = {
+                'prediction': 'Tumor Detected' if confidence > 0.5 else 'No Tumor Detected',
+                'confidence': f'{confidence * 100:.2f}%',
+                'image_path': filepath
+            }
+            
+            return jsonify(result)
         
-        result = {
-            'prediction': 'Tumor Detected' if confidence > 0.5 else 'No Tumor Detected',
-            'confidence': f'{confidence * 100:.2f}%',
-            'image_path': filepath
-        }
-        
-        return jsonify(result)
-    
-    return jsonify({'error': 'Invalid file type'})
+        return jsonify({'error': 'Invalid file type'})
+    except Exception as e:
+        import traceback
+        print('Exception in /predict:', traceback.format_exc())
+        return jsonify({'error': f'Internal server error: {str(e)}'}), 500
 
 # New route to get supported cities for suggestions
 @app.route('/cities', methods=['GET'])
